@@ -1,3 +1,4 @@
+
 # Below function creates the special matrix 
 # 1.sets the element
 # 2.get the element
@@ -10,28 +11,29 @@ makeCacheMatrix <- function(x = matrix()) {
     inv <<- NULL
   }
   get <- function() x
-  setinverse <- function(inverse) inv <<- inverse
-  getinverse <- function() inv
+  set_inverse <- function(inverse) inv <<- inverse
+  get_inverse <- function() inv
   list(set = set, get = get,
-       setinverse = setinverse,
-       getinverse = getinverse)
+       set_inverse = set_inverse,
+       get_inverse = get_inverse)
 }
 
 # Checks whether we have already calculated the inverse if not then uses function above defined calculates and caches it
 cacheinverse <- function(x, ...) {
   
-  inv <- x$getinverse()
+  inv <- x$get_inverse()
   if(!is.null(inv)) {
-    message("getting cached data")
+    message("Getting the cached data ...")
     return(inv)
   }
   matrix_to_invert <- x$get()
   inv <- solve(matrix_to_invert, ...)
-  x$setinverse(inv)
+  x$set_inverse(inv)
   inv
 }
 
 my_Matrix <- makeCacheMatrix(matrix(1:4, 2, 2))
 my_Matrix$get()
-my_Matrix$getinverse()
+my_Matrix$get_inverse()
 cacheinverse(my_Matrix)
+
